@@ -1,0 +1,18 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background-color: #EBEBEB;
+	border-bottom: 1px solid #e8e8e8;
+}
+
+#topBar {
+	height: 25px;
+	padding: 7px;
+	padding-left: 15px;
+	background-color: #F1F1F1;
+}
+
+#socialCodingButtons {
+	float: right;
+}
+
