@@ -21,107 +21,62 @@
 		<div class="top-bar">
 			<h3>ember-simple-pagination</h3>
 			<div class="social-coding-buttons">
-				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=jquery.ytload&type=watch&count=true"
+				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=ember-simple-pagination&type=watch&count=true"
 						allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
-				<iframe src="http://ghbtns.com/github-btn.html?user=mythli&repo=jquery.ytload&type=fork&count=true"
+				<iframe src="http://ghbtns.com/github-btn.html?user=mythli&repo=ember-simple-pagination&type=fork&count=true"
 						allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
-				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=jquery.ytload&type=follow&count=true"
+				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=ember-simple-pagination&type=follow&count=true"
 						allowtransparency="true" frameborder="0" scrolling="0" width="140" height="20"></iframe>
 			</div>
 		</div>
 		<div class="container page">
+			<div class="pagination-container clearfix">
+				<div class="pagination-range">
+					{{pageStart}}-{{pageEnd}} of {{total}}
+				</div>
+
+				{{partial 'pagination'}}
+			</div>
 			<ul class="cover-view wide list-unstyled clearfix">
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
-				<li>
-					<a href="#">
-						<div class="cover-holder">
-						</div>
-						<div class="description">
-							<p class="name">Frodo</p>
-							<p class="price">10€</p>
-						</div>
-					</a>
-				</li>
+				{{#each paginatedContent}}
+					<li>
+						<a href="#">
+							<div class="cover-holder">
+							</div>
+							<div class="description">
+								<p class="name">{{title}}</p>
+								<p class="price">{{price}}€</p>
+							</div>
+						</a>
+					</li>
+				{{/each}}
 			</ul>
+			<div class="pagination-container">
+				<div class="pagination-range">
+					{{pageStart}}-{{pageEnd}} of {{total}}
+				</div>
+				{{partial 'pagination'}}
+			</div>
 		</div>
 	</script>
 
-	<script type="text/x-handlebars" id="ember/pagination">
+	<script type="text/x-handlebars" id="pagination">
 		<ul class="pagination">
-			{{#if view.previousPage}}
+			{{#if previousPage}}
 				<li>
-					{{#link-to 'shop.browse' (query-params page=view.previousPage)}}&laquo;{{/link-to}}
+					{{#link-to 'index' (query-params page=previousPage)}}&laquo;{{/link-to}}
 				</li>
 			{{else}}
 				<li><span>&laquo;</span></li>
 			{{/if}}
-			{{#each view.paginationItems}}
+			{{#each paginationItems}}
 				<li {{bind-attr class="isActive:active"}}>
-					{{#link-to 'shop.browse' (query-params page=this.page)}}{{this.page}}{{/link-to}}
+					{{#link-to 'index' (query-params page=this.page)}}{{this.page}}{{/link-to}}
 				</li>
 			{{/each}}
-			{{#if view.nextPage}}
+			{{#if nextPage}}
 				<li>
-					{{#link-to 'shop.browse' (query-params page=view.nextPage)}}&raquo;{{/link-to}}
+					{{#link-to 'index' (query-params page=nextPage)}}&raquo;{{/link-to}}
 				</li>
 			{{else}}
 				<li><span>&raquo;</span></li>

@@ -1,10 +1,10 @@
-Ember.PaginationMixin = Ember.Mixin.create({
+Ember.SimplePaginationMixin = Ember.Mixin.create({
 	page: 1,
 	pageSize: 10,
 	rangeCache: {},
 	total: null,
 	paginatedContent: null,
-
+	paginationItemCount: 4,
 
 	init: function() {
 		var _this = this;
@@ -59,7 +59,7 @@ Ember.PaginationMixin = Ember.Mixin.create({
 
 		// Check if page is already cached or should be requested from the server
 		if(Ember.isEmpty(this.rangeCache[key])) {
-			this.didRequestRange(this.get('pageStart') - 1, this.get('pageSize')).then(function(data) {
+			this.didRequestRange().then(function(data) {
 				// Cache data in local array
 				_this.rangeCache[key] = data;
 				_this.set('paginatedContent', data);
@@ -71,18 +71,10 @@ Ember.PaginationMixin = Ember.Mixin.create({
 		}
 	}.observes('pageStart').on('init'),
 
-	didRequestRange: Ember.K,
-	didRequestTotal: Ember.K
-});
-
-Ember.PaginationView = Ember.View.extend({
-	templateName: 'components/pagination',
-	paginationItemCount: 4,
-
 	paginationItems: function() {
 		var result = [],
-			totalPages = this.get('controller.totalPages'),
-			page = parseInt(this.get('controller.page')),
+			totalPages = this.get('totalPages'),
+			page = parseInt(this.get('page')),
 			paginationItemCount = this.get('paginationItemCount'),
 			length = (totalPages >= paginationItemCount) ? paginationItemCount : totalPages,
 			startPos;
@@ -107,23 +99,56 @@ Ember.PaginationView = Ember.View.extend({
 		}
 
 		return result;
-	}.property('controller.page', 'itemCount', 'controller.totalPages'),
+	}.property('page', 'itemCount', 'totalPages'),
 
 	previousPage: function() {
-		if(this.get('controller.page') < 1) {
+		if(this.get('page') < 1) {
 			return null;
 		}
 
-		return this.get('controller.page') - 1;
-	}.property('controller.page'),
+		return this.get('page') - 1;
+	}.property('page'),
 
 	nextPage: function() {
-		if(Ember.isEmpty(this.get('controller.totalPages')) ||
-			this.get('controller.page') >= this.get('controller.totalPages'))
+		if(Ember.isEmpty(this.get('totalPages')) ||
+			this.get('page') >= this.get('totalPages'))
 		{
 			return null;
 		}
 
-		return parseFloat(this.get('controller.page')) + 1;
-	}.property('controller.page', 'controller.totalPages')
+		return parseFloat(this.get('page')) + 1;
+	}.property('page', 'totalPages'),
+	
+	didRequestRange: Ember.K,
+	didRequestTotal: Ember.K
+});
+
+Ember.CachedPagination = Ember.Mixin.create({
+	rangeCache: {},
+
+	onPageChanged: function() {
+
+	}.observes('pageStart').on('init')
+});
+
+Ember.SimplePaginationArrayMixin = Ember.Mixin.create({
+	didRequestRange: function() {
+		var _this = this,
+			pageStart = this.get('pageStart'),
+			pageEnd = this.get('pageEnd');
+
+		return new Ember.RSVP.Promise(function(resolve, reject) {
+			console.log('awd')  ;
+			console.log(_this.get('data'));
+			resolve(_this.get('data').slice(pageStart - 1, pageEnd));
+		});
+	},
+
+	didRequestTotal: function() {
+		var _this = this;
+
+		return new Ember.RSVP.Promise(function(resolve, reject) {
+			resolve(_this.get('data').length);
+		});
+	}
 });

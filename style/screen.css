@@ -1,5 +1,5 @@
 body {
-	margin: 0px;
+	margin: 0px 0px 30px 0px;
 	padding: 0px;
 	background-color: #EBEBEB;
 	border-bottom: 1px solid #e8e8e8;
@@ -26,6 +26,18 @@ body {
 	margin-top: 30px;
 	padding: 23px 0px 23px 23px;
 	background-color: #F1F1F1;
+}
+
+.pagination-container {
+
+}
+
+.pagination-range {
+	float: left;
+}
+
+.pagination {
+	float: right;
 }
 
 .cover-view {
