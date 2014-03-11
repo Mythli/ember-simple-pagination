@@ -14,29 +14,23 @@
 	</script>
 
 	<script type="text/x-handlebars">
-		{{outlet}}
-	</script>
-
-	<script type="text/x-handlebars" id="index">
 		<div class="top-bar">
 			<h3>ember-simple-pagination</h3>
 			<div class="social-coding-buttons">
 				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=ember-simple-pagination&type=watch&count=true"
-						allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
+				        allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
 				<iframe src="http://ghbtns.com/github-btn.html?user=mythli&repo=ember-simple-pagination&type=fork&count=true"
-						allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
+				        allowtransparency="true" frameborder="0" scrolling="0" width="80" height="20"></iframe>
 				<iframe src="http://ghbtns.com/github-btn.html?user=Mythli&repo=ember-simple-pagination&type=follow&count=true"
-						allowtransparency="true" frameborder="0" scrolling="0" width="140" height="20"></iframe>
+				        allowtransparency="true" frameborder="0" scrolling="0" width="140" height="20"></iframe>
 			</div>
 		</div>
-		<div class="container page">
-			<div class="pagination-container clearfix">
-				<div class="pagination-range">
-					{{pageStart}}-{{pageEnd}} of {{total}}
-				</div>
+		{{outlet}}
+	</script>
 
-				{{partial 'pagination'}}
-			</div>
+	<script type="text/x-handlebars" id="index">
+		<div class="container page">
+			{{partial 'paginationHeader'}}
 			<ul class="cover-view wide list-unstyled clearfix">
 				{{#each paginatedContent}}
 					<li>
@@ -51,12 +45,7 @@
 					</li>
 				{{/each}}
 			</ul>
-			<div class="pagination-container">
-				<div class="pagination-range">
-					{{pageStart}}-{{pageEnd}} of {{total}}
-				</div>
-				{{partial 'pagination'}}
-			</div>
+			{{partial 'paginationHeader'}}
 		</div>
 	</script>
 
@@ -82,6 +71,16 @@
 				<li><span>&raquo;</span></li>
 			{{/if}}
 		</ul>
+	</script>
+
+	<script type="text/x-handlebars" id="paginationHeader">
+		<div class="contentHeader clearfix">
+				<span class="pull-left">
+					<span class="highlight">{{pageStart}}-{{pageEnd}}</span> of {{total}}
+				</span>
+
+			{{partial 'pagination'}}
+		</div>
 	</script>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
