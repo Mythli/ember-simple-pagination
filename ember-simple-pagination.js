@@ -166,6 +166,3 @@ Ember.SimplePaginationArrayMixin = Ember.Mixin.create({
 		});
 	}
 });
-
-//xartisart
-//2015fgfff
